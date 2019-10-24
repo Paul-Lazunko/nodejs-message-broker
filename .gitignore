@@ -1,0 +1,27 @@
+# Editors:
+.idea
+*.iml
+
+# node_modules:
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# logs:
+logs/*
+*.log
+
+# dist
+dist/*
+
+# test
+test/*
+
+# env_file
+*.env
+
+
+# lock files
+*.lock
+package-lock.json

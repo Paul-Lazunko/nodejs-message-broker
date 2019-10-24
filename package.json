@@ -1,0 +1,50 @@
+{
+  "name": "nodejs-message-broker",
+  "version": "1.0.0",
+  "description": "Node.js Message Broker",
+  "author": "Paul Lazunko <plavel@gmail.com>",
+  "keywords": [
+    "node.js",
+    "microservice",
+    "message broker",
+    "messaging",
+    "tcp"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paul-Lazunko/nodejs-message-broker.git"
+  },
+  "config": {
+    "mainJs": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc && tslint src/**/*.ts{,x}",
+    "tslint": "tslint src/**/*.ts{,x}",
+    "postinstall": "tsc"
+  },
+  "dependencies": {
+    "data-store": "^4.0.3",
+    "joi": "^14.3.1"
+  },
+  "devDependencies": {
+    "@types/joi": "^14.3.3",
+    "@types/node": "^9.4.6",
+    "husky": "3.0.0",
+    "ts-node": "^5.0.0",
+    "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.5.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run tslint"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/Paul-Lazunko/nodejs-message-broker/issues"
+  },
+  "homepage": "https://github.com/Paul-Lazunko/nodejs-message-broker#readme",
+  "main": "dist/index.js"
+}
