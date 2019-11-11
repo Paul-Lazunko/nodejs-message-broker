@@ -8,7 +8,7 @@
 - Restores queues and works in case of restart or temporary failure
 - Several servers can interact between themselves as separated systems or replicas which are proxied with provided load balancer 
 
-###The simplest example of usage:
+**The simplest example of usage:**
 
 
 Install package
@@ -16,7 +16,7 @@ Install package
 npm i -s nodejs-message-broker; 
 ```
 
-#####Create message broker server and clients instances:
+Create message broker server and clients instances:
 
 ```typescript
 import { MessageBrokerServer } from 'nodejs-message-broker';
@@ -35,7 +35,7 @@ Server options object passed to the server's constructor includes next keys:
 - **eventEmitTimeoutValue**: time interval between messages handling (optional, default 0 ms)
 - **secureKey**: key for encryption, same secureKey should be provided to clients, if it is provided all messages between server and clients will be encrypted (optional)
 
-#####Create clients: 
+Create clients: 
 
 ```typescript
 import { MessageBrokerClient } from 'nodejs-message-broker';
@@ -119,7 +119,7 @@ start();
 
 ### Load balancing:
 
-Create servers (notice that load balancing usage means that "secureKey" option should be the same for all proxied instances. 
+Create servers (notice that load balancing usage means that "**secureKey**" option should be the same for all proxied instances. 
 Instead of this you can use different secureKeys fo each server and follow next schema to provide interaction between several separated systems)
 
 ```typescript
@@ -189,7 +189,6 @@ const loadBalancer = new MessageBrokerLoadBalancer({
 ```
 
 Connect your clients to load balancer:
-
 
 ```typescript
 import { MessageBrokerClient } from 'nodejs-message-broker';
