@@ -10,7 +10,6 @@ export class MessageBrokerLoadBalancer {
   constructor(options: ILoadBalancerOptions) {
     this.instances = options.instances;
     this.proxyServer = createServer((socket: Socket) => {
-      console.log({socket})
       try {
         const proxySocket = new Socket();
         const options = roundRobinGetter(this.instances);
@@ -20,6 +19,9 @@ export class MessageBrokerLoadBalancer {
         });
         proxySocket.on('data', ( data ) => {
           socket.write(data);
+        });
+        socket.on('error', (error) => {
+          console.log({error})
         });
         proxySocket.on('error', (error) => {
           console.log({error})
