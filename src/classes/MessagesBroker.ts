@@ -223,7 +223,7 @@ export class MessagesBroker {
     if ( (!message.options || !message.options.ttl) || ( !message.info  || !message.info.receivedAt ) ) {
       return true;
     }
-    return message.info.receivedAt + message.options.ttl < new Date().getTime();
+    return message.info.receivedAt + message.options.ttl > new Date().getTime();
   }
 
   private sync() {
