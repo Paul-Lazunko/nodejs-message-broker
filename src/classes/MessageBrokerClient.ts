@@ -5,7 +5,7 @@ import {
   EMessageStatus,
   TClientHandler
 } from '../types';
-import {CryptoHelper, uidHelper, validateClientOptions} from '../helpers';
+import {CryptoHelper, uidHelper, validateClientOptions, validateClientRequest} from '../helpers';
 import {
   IClientOptions,
   IClientRequestParams,
@@ -156,6 +156,7 @@ export class MessageBrokerClient {
   }
 
   public async request(params: IOutgoingMessage | any, options: IMessageOptions | any = {}, timeoutValue: number = 0): Promise<any> {
+    validateClientRequest(params, options, timeoutValue);
     return new Promise( ( resolve: Function, reject: Function) => {
       params.incomingId = uidHelper();
       params.options = options;
