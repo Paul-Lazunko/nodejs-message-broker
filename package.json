@@ -1,6 +1,6 @@
 {
   "name": "nodejs-message-broker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Node.js Message Broker",
   "author": "Paul Lazunko <plavel@gmail.com>",
   "keywords": [
@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "data-store": "^4.0.3",
+    "esm": "^3.2.25",
     "joi": "^14.3.1"
   },
   "devDependencies": {
