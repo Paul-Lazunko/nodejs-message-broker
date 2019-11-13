@@ -72,10 +72,32 @@ const responseSchema = joi.object({
   message: messageSchema
 });
 
+const messageDataSchema = joi.object({
+  action: joi.string().required(),
+  data: joi.any().required()
+});
+
+const messageOptionsSchema = joi.object({
+  ttl: joi.number().positive().integer()
+});
+
+const requestTimeoutSchema = joi.object({
+  requestTimeout: joi.number().positive().integer()
+});
+
+export function validateClientRequest(data: any, options: any, requestTimeout: number) {
+  validate(messageDataSchema, data);
+  if ( options ) {
+    validate(messageOptionsSchema, options);
+  }
+  if ( requestTimeout ) {
+    validate(requestTimeoutSchema, { requestTimeout });
+  }
+}
+
 export function validateInit(options: any) {
   return validate(initSchema, options);
 }
-
 
 export function validateResponse(options: any) {
   return validate(responseSchema, options);
