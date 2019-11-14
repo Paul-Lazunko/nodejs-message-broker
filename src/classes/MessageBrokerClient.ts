@@ -40,10 +40,8 @@ const onData: any =  async function (data: string)  {
         this.receivers = message.data;
         break;
     }
-
-  } catch(e) {
-    // TODO: return error
-    console.log({e},'socketError')
+  } catch(error) {
+    console.log({ error })
   }
 };
 
@@ -156,14 +154,18 @@ export class MessageBrokerClient {
   }
 
   public async request(params: IOutgoingMessage | any, options: IMessageOptions | any = {}, timeoutValue: number = 0): Promise<any> {
-    validateClientRequest(params, options, timeoutValue);
     return new Promise( ( resolve: Function, reject: Function) => {
+      try {
+        validateClientRequest(params, options, timeoutValue);
+      } catch(error) {
+        reject(error);
+      }
       params.incomingId = uidHelper();
       params.options = options;
       const self = this;
       let errorTimeout: any;
       if ( timeoutValue ) {
-        params.options = params.options || {};
+        params.options = options || {};
         if ( params.options.ttl && params.options.ttl < timeoutValue ) {
           params.options.ttl = timeoutValue;
         }
@@ -173,6 +175,7 @@ export class MessageBrokerClient {
           reject(new Error(`Request ${params.incomingId} failed: timeout ${timeoutValue} exceeded`))
         }, timeoutValue)
       }
+
       this.eventEmitter.addListener(params.incomingId, (error, response) => {
         if ( errorTimeout ) {
           clearTimeout(errorTimeout)

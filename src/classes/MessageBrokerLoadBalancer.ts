@@ -11,31 +11,41 @@ export class MessageBrokerLoadBalancer {
     this.instances = options.instances;
     this.proxyServer = createServer((socket: Socket) => {
       try {
+
         const proxySocket = new Socket();
         const options = roundRobinGetter(this.instances);
         proxySocket.connect(options);
+
         socket.on('data', (data) => {
-          proxySocket.write(data);
+          proxySocket.write(data.toString());
         });
+
         proxySocket.on('data', ( data ) => {
-          socket.write(data);
+          socket.write(data.toString());
         });
+
         socket.on('error', (error) => {
-          console.log({error})
         });
+
         proxySocket.on('error', (error) => {
-          console.log({error})
         });
+
         proxySocket.on('close', () => {
           socket.end()
         });
+
         socket.on('close', () => {
           proxySocket.end()
         });
+
       } catch ( error ) {
+
+        console.log({ error });
         socket.end();
+
       }
     });
+
     this.proxyServer.listen(options.port);
   }
 }

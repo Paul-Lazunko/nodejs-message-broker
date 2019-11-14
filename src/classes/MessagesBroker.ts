@@ -4,8 +4,7 @@ import {
 import {
   MESSAGE_BROKER_CHECK_EVENT,
   MESSAGE_BROKER_SYNC_EVENT,
-  MESSAGE_BROKER_SYNC_TIMEOUT_VALUE,
-  STORAGE_ROOT_KEY
+  MESSAGE_BROKER_SYNC_TIMEOUT_VALUE
 } from '../constants';
 import {
   EActions,
@@ -52,6 +51,7 @@ export class MessagesBroker {
   private checkTimeOut: NodeJS.Timer | any;
 
   constructor(options: IMessageBrokerOptions) {
+    this.id = options.id;
     let restore: IStorageStructure = {
       messageBuffer: {},
       // @ts-ignore
@@ -60,7 +60,7 @@ export class MessagesBroker {
       outgoingQueue: [],
     };
     try {
-      restore = JSON.parse(store.get(STORAGE_ROOT_KEY));
+      restore = JSON.parse(store.get(this.id));
       validateStore(restore);
     } catch(e) {}
     this.eventEmitter = new EventEmitter();
@@ -73,6 +73,7 @@ export class MessagesBroker {
       eventEmitTimeoutValue: options.eventEmitTimeoutValue || 0,
       async taskHandler (message: IMessage): Promise<IMessage> {
         const messageIsNotExpired: boolean = self.checkMessageOptionsTtl(message);
+        let found: boolean = false;
         if ( messageIsNotExpired ) {
           const receiverIds = self.services.get(message.receiver);
           if ( receiverIds && receiverIds.length ) {
@@ -82,20 +83,34 @@ export class MessagesBroker {
           }
           for ( let i = 0; i < self.proxyTo.length; i = i + 1) {
             if ( self.proxyTo[i].receivers.includes(message.receiver) ) {
-              const response = await self.proxyTo[i].request({ action: message.receiver, data: message.data });
-              message.data = response.data;
-              message.status = EMessageStatus.HANDLED;
-              const senderIds = self.services.get(message.sender);
-              if ( senderIds && senderIds.length ) {
-                const sid = roundRobinGetter(senderIds);
-                return self.sendToSocket( sid,  { message: self.convertMessageToOutgoingMessage(message), action: EActions.RESPONSE });
-              }
+              found = true;
+              self.proxyTo[i].request({ action: message.receiver, data: message.data }, message.options)
+                .then(response => {
+                  message.data = response.data;
+                  message.status = response.status;
+                  message.info = message.info || {};
+                  message.info.deliveredAt = response.info.deliveredAt;
+                  message.info.handledAt = new Date().getTime();
+                  const senderIds = self.services.get(message.sender);
+                  if ( senderIds && senderIds.length ) {
+                    const sid = roundRobinGetter(senderIds);
+                    self.sendToSocket( sid,  {
+                      message: self.convertMessageToOutgoingMessage(message),
+                      action: EActions.RESPONSE
+                    });
+                  }
+                })
+                .catch(error => {
+                  console.log({ error })
+                });
               break;
             }
           }
-          message.info = message.info || {};
-          message.info.error = ETaskErrorCodes.NOT_DELIVERED;
-          throw new TaskError(message);
+          if ( !found ) {
+            message.info = message.info || {};
+            message.info.error = ETaskErrorCodes.NOT_DELIVERED;
+            throw new TaskError(message);
+          }
         } else {
           message.info = message.info || {};
           message.info.error = ETaskErrorCodes.EXPIRED;
@@ -215,8 +230,8 @@ export class MessagesBroker {
   }
 
   private convertMessageToOutgoingMessage(message: IMessage | IOutgoingMessage): IOutgoingMessage {
-    const { outgoingId, incomingId, data,  status, info } = message;
-    return { outgoingId, incomingId, data, status, info };
+    const { outgoingId, incomingId, data, options, status, info } = message;
+    return { outgoingId, incomingId, data, options, status, info };
   }
 
   private checkMessageOptionsTtl(message: IMessage): boolean {
@@ -227,7 +242,7 @@ export class MessagesBroker {
   }
 
   private sync() {
-    store.set(STORAGE_ROOT_KEY, JSON.stringify({
+    store.set(this.id, JSON.stringify({
       messageBuffer: this.messageBuffer,
       // @ts-ignore
       incomingQueue: this.incomingTaskManager.queueManager.queue,

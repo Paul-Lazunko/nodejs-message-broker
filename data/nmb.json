@@ -1,3 +1,4 @@
 {
-  "nmb": "{\"messageBuffer\":{},\"incomingQueue\":[],\"outgoingQueue\":[]}"
+  "a": "{\"messageBuffer\":{},\"incomingQueue\":[],\"outgoingQueue\":[]}",
+  "b": "{\"messageBuffer\":{},\"incomingQueue\":[],\"outgoingQueue\":[]}"
 }

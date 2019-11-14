@@ -22,6 +22,7 @@ Create message broker server and clients instances:
 import { MessageBrokerServer } from 'nodejs-message-broker';
 
 const server: MessageBrokerServer = new MessageBrokerServer({
+  id: 'server1',
   port: 8888, 
   syncInterval: 5000, 
   eventEmitTimeoutValue: 10, 
@@ -30,6 +31,7 @@ const server: MessageBrokerServer = new MessageBrokerServer({
 ```
 
 Server options object passed to the server's constructor includes next keys:
+- **id**: server unique id;
 - **port**: port which will be listening;
 - **syncInterval**: time interval between attempts to storing memory data in file system (optional, default is 7000 ms)
 - **eventEmitTimeoutValue**: time interval between messages handling (optional, default 0 ms)
@@ -126,6 +128,7 @@ Instead of this you can use different secureKeys fo each server and follow next 
 import { MessageBrokerServer } from 'nodejs-message-broker';
 
 const server_1: MessageBrokerServer = new MessageBrokerServer({
+  id: 'server_1',
   port: 8887,
   syncInterval: 5000,
   eventEmitTimeoutValue: 10,
@@ -149,6 +152,7 @@ const server_1: MessageBrokerServer = new MessageBrokerServer({
 import { MessageBrokerServer } from 'nodejs-message-broker';
 
 const server_2: MessageBrokerServer = new MessageBrokerServer({
+  id: 'server_2',
   port: 8886, 
   syncInterval: 5000, 
   eventEmitTimeoutValue: 10, 

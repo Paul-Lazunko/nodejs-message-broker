@@ -4,4 +4,3 @@ export const MESSAGE_BROKER_SYNC_TIMEOUT_VALUE = 7000;
 export const MESSAGE_BROKER_SYNC_EVENT = 'sync';
 export const MESSAGE_BROKER_CHECK_EVENT = 'check';
 export const STORAGE_RELATIVE_PATH = '../../data/nmb.json';
-export const STORAGE_ROOT_KEY = 'nmb';

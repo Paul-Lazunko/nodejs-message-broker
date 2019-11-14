@@ -1,4 +1,4 @@
-import joi from 'joi';
+import joi from '@hapi/joi';
 
 const taskManagerOptionsSchema = joi.object({
   taskHandler: joi.func().required(),
@@ -11,7 +11,7 @@ const taskManagerOptionsSchema = joi.object({
 const clientOptionsSchema = joi.object({
   host: joi.string().required(),
   port: joi.number().positive().integer().min(1025).max(65536).required(),
-  action: joi.string().disallow('init','request','response','acknowledge').required(),
+  action: joi.string().disallow('init','request','response','acknowledge', 'error').required(),
   reconnectInterval: joi.number().positive().integer(),
   taskInterval: joi.number().positive().integer(),
   reconnect: joi.boolean(),
@@ -20,6 +20,7 @@ const clientOptionsSchema = joi.object({
 });
 
 const serverOptionsSchema = joi.object({
+  id: joi.string(),
   port: joi.number().positive().integer().min(1025).max(65536).required(),
   syncInterval: joi.number().positive().integer().required(),
   eventEmitTimeoutValue: joi.number().positive().integer(),
@@ -35,14 +36,14 @@ const messageSchema = joi.object({
   socketId: joi.string(),
   sender: joi.string(),
   receiver: joi.string(),
-  status: joi.string().valid([
+  status: joi.string().valid(
     'enqueued',
     'received',
     'delivered',
     'handled',
     'notDelivered',
     'notHandled'
-  ]),
+  ),
   options: joi.object({
     ttl: joi.number().positive().integer()
   }),

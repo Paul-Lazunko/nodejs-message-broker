@@ -36,6 +36,7 @@ export class MessageBrokerServer {
       this.secureKey = options.secureKey;
     }
     this.messageBroker = new MessagesBroker({
+      id: options.id,
       sendToSocket: this.sendToSocket.bind(this),
       syncInterval: options.syncInterval,
       eventEmitTimeoutValue: options.eventEmitTimeoutValue,
@@ -108,7 +109,12 @@ export class MessageBrokerServer {
     const socket = this.sockets.get(socketId);
     if ( socket ) {
       const response = this.isSecure ? CryptoHelper.ENCRYPT(this.secureKey, JSON.stringify(data)) : JSON.stringify(data);
-      socket.write(response);
+      try {
+        socket.write(response);
+      } catch (error) {
+        console.log(`Can not send data to to socket #${socketId}: ${error.messages}`);
+        console.error({ error });
+      }
     }
   }
 

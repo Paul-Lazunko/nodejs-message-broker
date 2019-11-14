@@ -1,6 +1,6 @@
 {
   "name": "nodejs-message-broker",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Node.js Message Broker",
   "author": "Paul Lazunko <plavel@gmail.com>",
   "keywords": [
@@ -24,12 +24,12 @@
     "postinstall": "tsc"
   },
   "dependencies": {
+    "@hapi/joi": ">=15.0.0",
     "data-store": "^4.0.3",
-    "esm": "^3.2.25",
-    "joi": "^14.3.1"
+    "esm": "^3.2.25"
   },
   "devDependencies": {
-    "@types/joi": "^14.3.3",
+    "@types/hapi__joi": "^15.0.4",
     "@types/node": "^9.4.6",
     "husky": "3.0.0",
     "ts-node": "^5.0.0",
