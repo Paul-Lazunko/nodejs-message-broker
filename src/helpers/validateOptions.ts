@@ -1,3 +1,4 @@
+// @ts-ignore
 import joi from '@hapi/joi';
 
 const taskManagerOptionsSchema = joi.object({
