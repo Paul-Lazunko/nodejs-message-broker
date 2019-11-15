@@ -1,4 +1,8 @@
 # Node.js Message Broker
+See example at:
+ 
+ https://github.com/Paul-Lazunko/nodejs-message-broker_example
+
  Has next advantages:
 - It is built as a node.js application (TCP server) and is not dependent on any external services, such as redis, rabbitmq-server, etc.
 - Very easy to use, no specific application level protocols
