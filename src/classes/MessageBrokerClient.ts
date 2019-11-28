@@ -173,21 +173,24 @@ export class MessageBrokerClient {
           self.eventEmitter.removeAllListeners(params.incomingId);
           clearTimeout(errorTimeout);
           reject(new Error(`Request ${params.incomingId} failed: timeout ${timeoutValue} exceeded`))
-        }, timeoutValue)
-      }
+        }, timeoutValue);
 
-      this.eventEmitter.addListener(params.incomingId, (error, response) => {
-        if ( errorTimeout ) {
-          clearTimeout(errorTimeout)
-        }
-        self.eventEmitter.removeAllListeners(params.incomingId);
-        if ( error ) {
-          reject(error);
-        } else {
-          resolve({ data: response.data, options: response.options, status: response.status, info: response.info });
-        }
-      });
-      this.outgoingTaskManager.addTask(params);
+        this.eventEmitter.addListener(params.incomingId, (error, response) => {
+          if ( errorTimeout ) {
+            clearTimeout(errorTimeout)
+          }
+          self.eventEmitter.removeAllListeners(params.incomingId);
+          if ( error ) {
+            reject(error);
+          } else {
+            resolve({ data: response.data, options: response.options, status: response.status, info: response.info });
+          }
+        });
+        this.outgoingTaskManager.addTask(params);
+      } else {
+        this.outgoingTaskManager.addTask(params);
+        resolve(true);
+      }
     });
   }
 
