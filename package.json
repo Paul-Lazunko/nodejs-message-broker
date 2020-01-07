@@ -1,6 +1,6 @@
 {
   "name": "nodejs-message-broker",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Node.js Message Broker",
   "author": "Paul Lazunko <plavel@gmail.com>",
   "keywords": [
@@ -14,9 +14,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Paul-Lazunko/nodejs-message-broker.git"
-  },
-  "config": {
-    "mainJs": "dist/index.js"
   },
   "scripts": {
     "build": "tsc && tslint src/**/*.ts{,x}",
@@ -47,5 +44,6 @@
     "url": "https://github.com/Paul-Lazunko/nodejs-message-broker/issues"
   },
   "homepage": "https://github.com/Paul-Lazunko/nodejs-message-broker#readme",
-  "main": "dist/index.js"
+  "main": "dist/index.js",
+  "types": "types.d.ts"
 }

@@ -1,7 +1,7 @@
 import { createServer, Server, Socket } from 'net';
 import { MessagesBroker } from './MessagesBroker';
 import { IMessage, IServerOptions, IServerRequestParams } from '../interfaces';
-import { EActions, EMessageStatus } from '../types';
+import { EActions, EMessageStatus } from '../customTypes';
 import {
   CryptoHelper,
   uidHelper,

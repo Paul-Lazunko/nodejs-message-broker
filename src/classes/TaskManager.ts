@@ -1,4 +1,4 @@
-import { TTaskManagerOptions } from '../types';
+import { TTaskManagerOptions } from '../customTypes';
 import {IMessage, IOutgoingMessage} from '../interfaces';
 import { QueueManager } from './QueueManager';
 import { validateTaskManagerOptions } from '../helpers';

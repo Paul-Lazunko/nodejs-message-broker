@@ -1,4 +1,4 @@
-import { EActions } from '../types';
+import { EActions } from '../customTypes';
 import { IOutgoingMessage} from './IOutgoingMessage';
 
 export interface IServerRequestParams {

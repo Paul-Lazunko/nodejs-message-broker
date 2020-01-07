@@ -1,4 +1,4 @@
-import { TClientHandler } from "../types";
+import { TClientHandler } from '../customTypes';
 
 export interface IClientOptions {
   host: string,

@@ -5,7 +5,7 @@ import {
   IStartable,
   IStopable
 } from '../interfaces';
-import { TQueueManagerOptions } from '../types';
+import { TQueueManagerOptions } from '../customTypes';
 
 export class QueueManager implements IStartable, IStopable {
     private queue: IMessage[] & IOutgoingMessage[];

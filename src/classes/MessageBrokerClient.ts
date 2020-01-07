@@ -4,8 +4,13 @@ import {
   EActions,
   EMessageStatus,
   TClientHandler
-} from '../types';
-import {CryptoHelper, uidHelper, validateClientOptions, validateClientRequest} from '../helpers';
+} from '../customTypes';
+import {
+  CryptoHelper,
+  uidHelper,
+  validateClientOptions,
+  validateClientRequest
+} from '../helpers';
 import {
   IClientOptions,
   IClientRequestParams,
@@ -15,8 +20,9 @@ import {
   IServerRequestParams,
   IMessage
 } from '../interfaces';
-import {TaskManager} from './TaskManager';
-import {TaskError} from '../errors';
+import { TaskManager } from './TaskManager';
+import { TaskError } from '../errors';
+import { errors } from '../constants';
 
 const onData: any =  async function (data: string)  {
   try {
@@ -175,12 +181,15 @@ export class MessageBrokerClient {
           reject(new Error(`Request ${params.incomingId} failed: timeout ${timeoutValue} exceeded`))
         }, timeoutValue);
 
-        this.eventEmitter.addListener(params.incomingId, (error, response) => {
+        this.eventEmitter.addListener(params.incomingId, (errorData, response) => {
           if ( errorTimeout ) {
             clearTimeout(errorTimeout)
           }
           self.eventEmitter.removeAllListeners(params.incomingId);
-          if ( error ) {
+          if ( errorData ) {
+            const errorMessage: string = errorData.info && errorData.info.error ?
+              errors[errorData.info && errorData.info.error] : errors.notDelivered;
+            const error: Error = new Error(errorMessage);
             reject(error);
           } else {
             resolve({ data: response.data, options: response.options, status: response.status, info: response.info });

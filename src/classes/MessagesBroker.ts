@@ -10,7 +10,7 @@ import {
   EActions,
   EMessageStatus,
   ETaskErrorCodes
-} from '../types';
+} from '../customTypes';
 import {
   IClientOptions,
   IMessage,

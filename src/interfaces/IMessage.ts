@@ -1,4 +1,4 @@
-import { EActions, EMessageStatus } from '../types';
+import { EActions, EMessageStatus } from '../customTypes';
 import { IMessageOptions } from './IMessageOptions';
 import { IMessageInfo } from './IMessageInfo';
 
