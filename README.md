@@ -77,7 +77,8 @@ For interactions between clients you can use "request" method in any client cont
 This method takes three arguments: 
 - first argument is an object with **action** (which specifies client to which you send request) 
   and **data** (which will be passed to this client requestHandler) properties, 
-- the second is an object with additional options (for v1.0.0 **ttl** options is supported only), 
+- the second is an object with additional options (**ttl** - time to live value for message in milliseconds, 
+**broadcast** - boolean identifier which indicates that message should be delivered to all clients with same action property), 
 - the third argument is positive integer which limits max execution time for this request 
   (error will be thrown when this value will be exceeded)
 

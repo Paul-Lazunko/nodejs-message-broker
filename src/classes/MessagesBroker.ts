@@ -73,12 +73,19 @@ export class MessagesBroker {
       eventEmitTimeoutValue: options.eventEmitTimeoutValue || 0,
       async taskHandler (message: IMessage): Promise<IMessage> {
         const messageIsNotExpired: boolean = self.checkMessageOptionsTtl(message);
+        const isBroadcast: boolean = this.checkMessageOptionsBroadcast(message);
         let found: boolean = false;
         if ( messageIsNotExpired ) {
           const receiverIds = self.services.get(message.receiver);
           if ( receiverIds && receiverIds.length ) {
-            const sid = roundRobinGetter(receiverIds);
-            self.sendToSocket(sid, { message: self.convertMessageToOutgoingMessage(message), action: EActions.REQUEST });
+            if ( isBroadcast ) {
+              receiverIds.forEach((sid: string) => {
+                self.sendToSocket(sid, { message: self.convertMessageToOutgoingMessage(message), action: EActions.REQUEST });
+              });
+            } else {
+              const sid = roundRobinGetter(receiverIds);
+              self.sendToSocket(sid, { message: self.convertMessageToOutgoingMessage(message), action: EActions.REQUEST });
+            }
             return message;
           }
           for ( let i = 0; i < self.proxyTo.length; i = i + 1) {
@@ -239,6 +246,13 @@ export class MessagesBroker {
       return true;
     }
     return message.info.receivedAt + message.options.ttl > new Date().getTime();
+  }
+
+  private checkMessageOptionsBroadcast(message: IMessage): boolean {
+    if ( !message.options ) {
+      return false;
+    }
+    return !! message.options.broadcast;
   }
 
   private sync() {

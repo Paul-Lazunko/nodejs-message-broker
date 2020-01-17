@@ -1,3 +1,4 @@
 export interface IMessageOptions {
-  ttl: number
+  ttl?: number,
+  broadcast?: boolean;
 }
