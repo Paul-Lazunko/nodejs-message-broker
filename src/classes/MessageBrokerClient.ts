@@ -34,13 +34,13 @@ const onData: any =  async function (data: string)  {
         this.incomingTaskManager.addTask(message);
         break;
       case EActions.ERROR:
-        this.eventEmitter.emit(message.incomingId, message);
+        this.eventEmitter.emit(message.clientId, message);
         break;
       case EActions.RESPONSE:
-        this.eventEmitter.emit(message.incomingId, null, message);
+        this.eventEmitter.emit(message.clientId, null, message);
         break;
       case EActions.ACKNOWLEDGE:
-        this.eventEmitter.removeAllListeners(message.incomingId);
+        this.eventEmitter.removeAllListeners(message.clientId);
         break;
       case EActions.RECEIVERS:
         this.receivers = message.data;
@@ -166,7 +166,7 @@ export class MessageBrokerClient {
       } catch(error) {
         reject(error);
       }
-      params.incomingId = uidHelper();
+      params.clientId = uidHelper();
       params.options = options;
       const self = this;
       let errorTimeout: any;
@@ -176,16 +176,16 @@ export class MessageBrokerClient {
           params.options.ttl = timeoutValue;
         }
         errorTimeout = setTimeout(() => {
-          self.eventEmitter.removeAllListeners(params.incomingId);
+          self.eventEmitter.removeAllListeners(params.clientId);
           clearTimeout(errorTimeout);
-          reject(new Error(`Request ${params.incomingId} failed: timeout ${timeoutValue} exceeded`))
+          reject(new Error(`Request ${params.clientId} failed: timeout ${timeoutValue} exceeded`))
         }, timeoutValue);
 
-        this.eventEmitter.addListener(params.incomingId, (errorData, response) => {
+        this.eventEmitter.addListener(params.clientId, (errorData, response) => {
           if ( errorTimeout ) {
             clearTimeout(errorTimeout)
           }
-          self.eventEmitter.removeAllListeners(params.incomingId);
+          self.eventEmitter.removeAllListeners(params.clientId);
           if ( errorData ) {
             const errorMessage: string = errorData.info && errorData.info.error ?
               errors[errorData.info && errorData.info.error] : errors.notDelivered;

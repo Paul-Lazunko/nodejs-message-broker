@@ -1,6 +1,6 @@
 export interface IClientRequestParams {
   action: string,
-  incomingId?: string,
+  clientId?: string,
   info?: any
   data: any
 }

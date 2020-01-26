@@ -3,8 +3,8 @@ import { IMessageOptions } from './IMessageOptions';
 import { IMessageInfo } from './IMessageInfo';
 
 export interface IMessage {
-  outgoingId: string,
-  incomingId?: string,
+  serverId: string,
+  clientId?: string,
   socketId?: string,
   sender: string,
   receiver: string,

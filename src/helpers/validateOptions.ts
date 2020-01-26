@@ -32,8 +32,8 @@ const serverOptionsSchema = joi.object({
 
 const messageSchema = joi.object({
   action: joi.string(),
-  incomingId: joi.string(),
-  outgoingId: joi.string(),
+  clientId: joi.string(),
+  serverId: joi.string(),
   socketId: joi.string(),
   sender: joi.string(),
   receiver: joi.string(),

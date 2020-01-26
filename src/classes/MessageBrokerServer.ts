@@ -91,8 +91,8 @@ export class MessageBrokerServer {
       default:
         validateMessage(data);
         const message: IMessage = {
-          outgoingId: uidHelper(),
-          incomingId: data.incomingId,
+          serverId: uidHelper(),
+          clientId: data.clientId,
           socketId: data.socketId,
           status: EMessageStatus.DEFAULT,
           sender: this.socketNames.get(data.socketId),

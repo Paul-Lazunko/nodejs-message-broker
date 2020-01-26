@@ -3,8 +3,8 @@ import { IMessageOptions } from './IMessageOptions';
 import {EActions,EMessageStatus} from '../customTypes';
 
 export interface IOutgoingMessage {
-  outgoingId?: string,
-  incomingId?: string,
+  serverId?: string,
+  clientId?: string,
   sender?: string,
   status?: EMessageStatus,
   data?: any

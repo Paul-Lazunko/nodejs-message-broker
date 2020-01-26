@@ -135,7 +135,7 @@ export class MessagesBroker {
         if ( message ) {
           message.info = message.info || {};
           message.info.deliveredAt = new Date().getTime();
-          self.messageBuffer.set(message.outgoingId, message);
+          self.messageBuffer.set(message.serverId, message);
         }
       }
     });
@@ -207,9 +207,9 @@ export class MessagesBroker {
 
   public processResponse(message: IMessage) {
     if (message) {
-      const storedMessage = this.messageBuffer.get(message.outgoingId);
+      const storedMessage = this.messageBuffer.get(message.serverId);
       if (storedMessage) {
-        this.messageBuffer.delete(message.outgoingId);
+        this.messageBuffer.delete(message.serverId);
         const isNotHandled: boolean = message.status === EMessageStatus.NOT_HANDLED;
         storedMessage.status = isNotHandled ? EMessageStatus.NOT_HANDLED : EMessageStatus.HANDLED;
         storedMessage.info = storedMessage.info || {};
@@ -237,8 +237,8 @@ export class MessagesBroker {
   }
 
   private convertMessageToOutgoingMessage(message: IMessage | IOutgoingMessage): IOutgoingMessage {
-    const { outgoingId, incomingId, data, options, status, info } = message;
-    return { outgoingId, incomingId, data, options, status, info };
+    const { serverId, clientId, data, options, status, info } = message;
+    return { serverId, clientId, data, options, status, info };
   }
 
   private checkMessageOptionsTtl(message: IMessage): boolean {
