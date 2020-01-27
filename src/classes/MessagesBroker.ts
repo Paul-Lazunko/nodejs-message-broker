@@ -125,7 +125,7 @@ export class MessagesBroker {
         }
       },
       errorCallback (error: TaskError) {
-        const senderIds = self.services.get(error.data.sender);
+        const senderIds = self.services.get(error.data && error.data.sender);
         if ( senderIds && senderIds.length ) {
           const sid = roundRobinGetter(senderIds);
           self.sendToSocket( sid,  { message: self.convertMessageToOutgoingMessage(error.data), action: EActions.ERROR });
