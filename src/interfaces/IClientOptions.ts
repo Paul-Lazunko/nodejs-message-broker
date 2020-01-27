@@ -8,5 +8,6 @@ export interface IClientOptions {
   requestHandler: TClientHandler,
   reconnect?: boolean,
   taskInterval?: number,
-  reconnectInterval?: number
+  reconnectInterval?: number,
+  defaultRequestTimeout?: number
 }

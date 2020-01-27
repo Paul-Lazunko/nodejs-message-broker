@@ -60,7 +60,7 @@ export class MessageBrokerServer {
         options = JSON.parse(options);
         options.socketId = id;
         this.onData(options)
-      } catch(e) {
+      } catch(error) {
         socket.end()
       }
     });
@@ -96,7 +96,7 @@ export class MessageBrokerServer {
           socketId: data.socketId,
           status: EMessageStatus.DEFAULT,
           sender: this.socketNames.get(data.socketId),
-          receiver: data.action,
+          receiver: data.id,
           data: data.data,
           options: data.options
         };

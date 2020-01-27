@@ -15,6 +15,7 @@ const clientOptionsSchema = joi.object({
   id: joi.string().disallow('init','request','response','acknowledge', 'error').required(),
   reconnectInterval: joi.number().positive().integer(),
   taskInterval: joi.number().positive().integer(),
+  defaultRequestTimeout: joi.number().positive().integer(),
   reconnect: joi.boolean(),
   requestHandler: joi.func().required(),
   secureKey: joi.string().length(32)
@@ -31,7 +32,7 @@ const serverOptionsSchema = joi.object({
 
 
 const messageSchema = joi.object({
-  action: joi.string(),
+  id: joi.string(),
   clientId: joi.string(),
   serverId: joi.string(),
   socketId: joi.string(),
@@ -46,7 +47,8 @@ const messageSchema = joi.object({
     'notHandled'
   ),
   options: joi.object({
-    ttl: joi.number().positive().integer()
+    ttl: joi.number().positive().integer(),
+    broadcast: joi.boolean()
   }),
   data: joi.any(),
   info: joi.object({
@@ -69,13 +71,13 @@ const initSchema = joi.object({
 });
 
 const responseSchema = joi.object({
-  action: joi.string().required(),
+  action: joi.string(),
   socketId: joi.any().required(),
   message: messageSchema
 });
 
 const messageDataSchema = joi.object({
-  action: joi.string().required(),
+  id: joi.string().required(),
   data: joi.any().required()
 });
 

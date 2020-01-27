@@ -27,7 +27,9 @@ export class TaskManager {
     }
 
     public addTask(task: IMessage| IOutgoingMessage)  {
-        this.queue.push(task);
+        if ( task ) {
+          this.queue.push(task);
+        }
     }
 
 }

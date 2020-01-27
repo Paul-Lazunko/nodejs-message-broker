@@ -7,7 +7,7 @@ export interface IOutgoingMessage {
   clientId?: string,
   sender?: string,
   status?: EMessageStatus,
-  data?: any
+  data: any
   info?: IMessageInfo
   options?: IMessageOptions
 }

@@ -2,7 +2,7 @@ import {
   EventEmitter
 } from 'events';
 import {
-  MESSAGE_BROKER_CHECK_EVENT,
+  MESSAGE_BROKER_CHECK_EVENT, MESSAGE_BROKER_DEFAULT_TIMEOUT_VALUE,
   MESSAGE_BROKER_SYNC_EVENT,
   MESSAGE_BROKER_SYNC_TIMEOUT_VALUE
 } from '../constants';
@@ -73,7 +73,7 @@ export class MessagesBroker {
       eventEmitTimeoutValue: options.eventEmitTimeoutValue || 0,
       async taskHandler (message: IMessage): Promise<IMessage> {
         const messageIsNotExpired: boolean = self.checkMessageOptionsTtl(message);
-        const isBroadcast: boolean = this.checkMessageOptionsBroadcast(message);
+        const isBroadcast: boolean = self.checkMessageOptionsBroadcast(message);
         let found: boolean = false;
         if ( messageIsNotExpired ) {
           const receiverIds = self.services.get(message.receiver);
@@ -91,7 +91,11 @@ export class MessagesBroker {
           for ( let i = 0; i < self.proxyTo.length; i = i + 1) {
             if ( self.proxyTo[i].receivers.includes(message.receiver) ) {
               found = true;
-              self.proxyTo[i].request({ action: message.receiver, data: message.data }, message.options)
+              self.proxyTo[i].request(
+                { id: message.receiver, data: message.data },
+                message.options,
+                self.proxyTo[i].defaultRequestTimeout || MESSAGE_BROKER_DEFAULT_TIMEOUT_VALUE
+              )
                 .then(response => {
                   message.data = response.data;
                   message.status = response.status;

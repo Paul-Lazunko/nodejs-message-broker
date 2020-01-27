@@ -61,14 +61,17 @@ export class MessageBrokerClient {
   private reconnectTimeout: NodeJS.Timer;
   private readonly secureKey: any;
   public receivers: string[];
-
+  public defaultRequestTimeout: number;
   private get isSecure(): boolean {
     return !! this.secureKey;
   }
 
   constructor (options: IClientOptions) {
     validateClientOptions(options);
-    const { host, port, id, secureKey } = options;
+    const { host, port, id, secureKey, defaultRequestTimeout } = options;
+    if ( defaultRequestTimeout ) {
+      this.defaultRequestTimeout = defaultRequestTimeout;
+    }
     if ( secureKey ) {
       this.secureKey = secureKey;
     }
