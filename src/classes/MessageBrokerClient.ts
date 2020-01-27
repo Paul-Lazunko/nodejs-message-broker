@@ -68,7 +68,7 @@ export class MessageBrokerClient {
 
   constructor (options: IClientOptions) {
     validateClientOptions(options);
-    const { host, port, action, secureKey } = options;
+    const { host, port, id, secureKey } = options;
     if ( secureKey ) {
       this.secureKey = secureKey;
     }
@@ -79,8 +79,8 @@ export class MessageBrokerClient {
 
     this.socket.addListener('connect', () => {
       this.write({
-        action: EActions.INIT,
-        id: action
+        id,
+        action: EActions.INIT
       });
       this.isConnected = true;
       console.log(`Successfully connected to server ${options.host}:${options.port}`);

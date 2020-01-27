@@ -52,7 +52,7 @@ const client1 = new MessageBrokerClient({
   reconnect: true,
   reconnectInterval: 1000,
   taskInterval: 10,
-  action: 'client_1',
+  id: 'client_1',
   secureKey: 'someSecureKey',
   requestHandler: async (data, options) => {
     console.log({ data, options });
@@ -91,7 +91,7 @@ const client2 = new MessageBrokerClient({
   reconnect: true,
   reconnectInterval: 1000,
   taskInterval: 10,
-  action: 'client_2',
+  id: 'client_2',
   secureKey: 'someSecureKey',
   requestHandler: async (data, options) => {
     console.log({ data, options });
@@ -145,7 +145,7 @@ const server_1: MessageBrokerServer = new MessageBrokerServer({
     reconnectInterval: 1000,
     taskInterval: 100,
     secureKey: 'test',
-    action: 'server_1',
+    id: 'server_1',
     requestHandler: async (data, options) => {
       return ({ data, options})
     }
@@ -169,7 +169,7 @@ const server_2: MessageBrokerServer = new MessageBrokerServer({
      reconnectInterval: 1000,
      taskInterval: 100,
      secureKey: 'test',
-     action: 'server_2',
+     id: 'server_2',
      requestHandler: async (data, options) => {
        return ({ data, options })
      }
@@ -208,7 +208,7 @@ const client = new MessageBrokerClient({
   reconnect: true,
   reconnectInterval: 1000,
   taskInterval: 10,
-  action: 'client_1',
+  id: 'client_1',
   secureKey: 'someSecureKey',
   requestHandler: async (data, options) => {
     console.log({ data, options });

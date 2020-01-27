@@ -3,7 +3,7 @@ import { TClientHandler } from '../customTypes';
 export interface IClientOptions {
   host: string,
   port: number,
-  action: string,
+  id: string,
   secureKey?: string,
   requestHandler: TClientHandler,
   reconnect?: boolean,

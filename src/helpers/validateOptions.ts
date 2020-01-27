@@ -12,7 +12,7 @@ const taskManagerOptionsSchema = joi.object({
 const clientOptionsSchema = joi.object({
   host: joi.string().required(),
   port: joi.number().positive().integer().min(1025).max(65536).required(),
-  action: joi.string().disallow('init','request','response','acknowledge', 'error').required(),
+  id: joi.string().disallow('init','request','response','acknowledge', 'error').required(),
   reconnectInterval: joi.number().positive().integer(),
   taskInterval: joi.number().positive().integer(),
   reconnect: joi.boolean(),

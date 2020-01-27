@@ -1,2 +1,3 @@
-# Changelog
-All notable changes to this package will be documented in this file.
+v1.1.11
+changes in IClientOptions:
+- replaced "action" with "id"
