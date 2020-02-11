@@ -22,12 +22,12 @@
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
+    "@types/node": "^9.4.6",
     "data-store": "^4.0.3",
     "esm": "^3.2.25"
   },
   "devDependencies": {
     "@types/hapi__joi": "^16.0.9",
-    "@types/node": "^9.4.6",
     "husky": "3.0.0",
     "ts-node": "^5.0.0",
     "tslint": "^5.9.1",
