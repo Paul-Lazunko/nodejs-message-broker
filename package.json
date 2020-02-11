@@ -1,6 +1,6 @@
 {
   "name": "nodejs-message-broker",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Node.js Message Broker",
   "author": "Paul Lazunko <plavel@gmail.com>",
   "keywords": [
@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "tsc && tslint src/**/*.ts{,x}",
-    "tslint": "tslint src/**/*.ts{,x}"
+    "tslint": "tslint src/**/*.ts{,x}",
+    "postinstall": "tsc"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
