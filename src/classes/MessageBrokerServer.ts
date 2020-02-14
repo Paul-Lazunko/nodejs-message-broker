@@ -55,7 +55,7 @@ export class MessageBrokerServer {
       try {
         let options: any = data.toString();
         if ( this.isSecure ) {
-          options = CryptoHelper.DECRYPT(this.secureKey, data.toString());
+          options = CryptoHelper.DECRYPT(this.secureKey, options);
         }
         options = JSON.parse(options);
         options.socketId = id;
