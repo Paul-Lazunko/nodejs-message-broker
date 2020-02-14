@@ -18,7 +18,7 @@ const clientOptionsSchema = joi.object({
   defaultRequestTimeout: joi.number().positive().integer(),
   reconnect: joi.boolean(),
   requestHandler: joi.func().required(),
-  secureKey: joi.string().length(32)
+  secureKey: joi.string()
 });
 
 const serverOptionsSchema = joi.object({
@@ -26,7 +26,7 @@ const serverOptionsSchema = joi.object({
   port: joi.number().positive().integer().min(1025).max(65536).required(),
   syncInterval: joi.number().positive().integer().required(),
   eventEmitTimeoutValue: joi.number().positive().integer(),
-  secureKey:joi.string().length(32),
+  secureKey:joi.string(),
   proxyTo: joi.array().items(clientOptionsSchema)
 });
 
