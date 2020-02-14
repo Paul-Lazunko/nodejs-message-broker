@@ -53,7 +53,7 @@ export class MessageBrokerServer {
     this.sockets.set(id, socket);
     socket.addListener('data', (data) => {
       try {
-        let options: any;
+        let options: any = data.toString();
         if ( this.isSecure ) {
           options = CryptoHelper.DECRYPT(this.secureKey, data.toString());
         }
