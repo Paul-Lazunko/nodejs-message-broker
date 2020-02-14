@@ -82,7 +82,8 @@ const messageDataSchema = joi.object({
 });
 
 const messageOptionsSchema = joi.object({
-  ttl: joi.number().positive().integer()
+  ttl: joi.number().positive().integer(),
+  broadcast: joi.boolean()
 });
 
 const requestTimeoutSchema = joi.object({
