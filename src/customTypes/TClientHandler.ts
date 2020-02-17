@@ -3,4 +3,4 @@ import {
   IMessageOptions
 } from '../interfaces';
 
-export type TClientHandler =  (data: any, options: IMessageOptions) => IClientResponseParams | void
+export type TClientHandler =  (data: any, options: IMessageOptions) => IClientResponseParams
