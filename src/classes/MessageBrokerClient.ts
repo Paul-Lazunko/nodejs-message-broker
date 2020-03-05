@@ -26,11 +26,13 @@ import { errors } from '../constants';
 
 const onData: any =  async function (data: string)  {
   try {
-    let request = data.toString();
+    let request;
     try {
       request = this.isSecure
         ? JSON.parse(CryptoHelper.DECRYPT(this.secureKey, data.toString())) : JSON.parse(data.toString());
-    } catch (e) {}
+    } catch (e) {
+      return;
+    }
     const { action, message } = request;
     switch (action) {
       case EActions.REQUEST:
