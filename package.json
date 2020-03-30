@@ -1,6 +1,6 @@
 {
   "name": "nodejs-message-broker",
-  "version": "1.2.15",
+  "version": "1.2.16",
   "description": "Node.js Message Broker",
   "author": "Paul Lazunko <plavel@gmail.com>",
   "keywords": [
@@ -44,6 +44,5 @@
     "url": "https://github.com/Paul-Lazunko/nodejs-message-broker/issues"
   },
   "homepage": "https://github.com/Paul-Lazunko/nodejs-message-broker#readme",
-  "main": "dist/index.js",
-  "types": "src/types.d.ts"
+  "main": "dist/index.js"
 }
