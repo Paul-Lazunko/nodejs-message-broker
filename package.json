@@ -1,6 +1,6 @@
 {
   "name": "nodejs-message-broker",
-  "version": "1.2.17",
+  "version": "1.2.18",
   "description": "Node.js Message Broker",
   "author": "Paul Lazunko <plavel@gmail.com>",
   "keywords": [
@@ -26,8 +26,8 @@
     "esm": "3.2.25"
   },
   "devDependencies": {
-    "@types/node": "9.4.6",
     "@types/hapi__joi": "16.0.9",
+    "@types/node": "9.4.6",
     "husky": "3.0.0",
     "ts-node": "5.0.0",
     "tslint": "5.9.1",
@@ -44,5 +44,6 @@
     "url": "https://github.com/Paul-Lazunko/nodejs-message-broker/issues"
   },
   "homepage": "https://github.com/Paul-Lazunko/nodejs-message-broker#readme",
-  "main": "dist/index.js"
+  "main": "dist/index.js",
+  "types": "src/types.d.ts"
 }
