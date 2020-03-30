@@ -67,6 +67,7 @@ export class MessageBrokerClient {
   private readonly secureKey: any;
   public receivers: string[];
   public defaultRequestTimeout: number;
+  private socketOptions: any;
   private get isSecure(): boolean {
     return !! this.secureKey;
   }
@@ -74,6 +75,8 @@ export class MessageBrokerClient {
   constructor (options: IClientOptions) {
     validateClientOptions(options);
     const { host, port, id, secureKey, defaultRequestTimeout } = options;
+    this.socketOptions = { host, port };
+    const autoStart: boolean = options.hasOwnProperty('autoStart') ? options.autoStart : true;
     if ( defaultRequestTimeout ) {
       this.defaultRequestTimeout = defaultRequestTimeout;
     }
@@ -164,7 +167,14 @@ export class MessageBrokerClient {
       }
     });
 
-    this.socket.connect({ host, port });
+    if ( autoStart ) {
+      this.start();
+    }
+
+  }
+
+  public start() {
+    this.socket.connect(this.socketOptions);
   }
 
   public async request(params: IOutgoingMessage | any, options: IMessageOptions | any = {}, timeoutValue: number = 0): Promise<any> {

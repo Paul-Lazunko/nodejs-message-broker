@@ -71,6 +71,8 @@ Client options object passed to the client's constructor includes next keys:
   if it is provided all messages between server and clients will be encrypted (optional)
 - **action**: name of this client for calling from another clients side;
 - **requestHandler**: handler for requests (takes two arguments - data and options)
+- **autoStart**: boolean which indicates automatically start connection 
+(default true, when false - ypu should initiate connection with **client.start()** method)
 
 
 For interactions between clients you can use "request" method in any client context. 
@@ -208,6 +210,7 @@ const client = new MessageBrokerClient({
   reconnect: true,
   reconnectInterval: 1000,
   taskInterval: 10,
+  autoStart: true,
   id: 'client_1',
   secureKey: 'someSecureKey',
   requestHandler: async (data, options) => {

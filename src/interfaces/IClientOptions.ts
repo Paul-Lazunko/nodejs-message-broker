@@ -10,4 +10,5 @@ export interface IClientOptions {
   taskInterval?: number,
   reconnectInterval?: number,
   defaultRequestTimeout?: number
+  autoStart?: boolean
 }

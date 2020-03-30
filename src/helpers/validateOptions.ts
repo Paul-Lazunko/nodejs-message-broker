@@ -18,7 +18,8 @@ const clientOptionsSchema = joi.object({
   defaultRequestTimeout: joi.number().positive().integer(),
   reconnect: joi.boolean(),
   requestHandler: joi.func().required(),
-  secureKey: joi.string()
+  secureKey: joi.string(),
+  autoStart: joi.boolean()
 });
 
 const serverOptionsSchema = joi.object({
