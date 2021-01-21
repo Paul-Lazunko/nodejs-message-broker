@@ -1,4 +1,11 @@
 # Node.js Message Broker
+
+****
+This package is deprecated, use **evodove** instead:
+https://www.npmjs.com/package/evodove
+****
+
+
 See example at:
  
  https://github.com/Paul-Lazunko/nodejs-message-broker_example
